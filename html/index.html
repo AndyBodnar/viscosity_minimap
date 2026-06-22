@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="minimap-frame" id="frame">
+        <!-- speaker notch (top) -->
+        <div class="notch"></div>
+        <!-- corner bolts -->
+        <span class="bolt tl"></span>
+        <span class="bolt tr"></span>
+        <span class="bolt bl"></span>
+        <span class="bolt br"></span>
+    </div>
+
+    <script>
+        // Hide/show the bezel on request from the client (pause menu, big map).
+        window.addEventListener('message', (e) => {
+            const d = e.data || {};
+            if (d.type === 'display') {
+                document.getElementById('frame').style.opacity = d.show ? '1' : '0';
+            }
+        });
+    </script>
+</body>
+</html>

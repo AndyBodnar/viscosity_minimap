@@ -1,0 +1,73 @@
+/* ============================================================
+   Viscosity minimap — tablet bezel ring around the game minimap
+   Tune the --map-* vars in-game so the hole lines up with the radar.
+   ============================================================ */
+:root {
+    /* Minimap rectangle (default GTA bottom-left, 16:9). Tweak to taste. */
+    --map-left: 1.5vw;
+    --map-bottom: 4.0vh;
+    --map-w: 16.0vw;
+    --map-h: 18.5vh;
+    --bezel: 13px;               /* frame thickness */
+    --accent: #8b3fe8;
+    --accent-glow: rgba(139, 63, 232, 0.55);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: transparent; }
+
+.minimap-frame {
+    position: absolute;
+    /* sit the bezel OUTSIDE the minimap rect */
+    left: calc(var(--map-left) - var(--bezel));
+    bottom: calc(var(--map-bottom) - var(--bezel));
+    width: calc(var(--map-w) + var(--bezel) * 2);
+    height: calc(var(--map-h) + var(--bezel) * 2);
+    box-sizing: border-box;
+
+    /* the bezel itself: thick rounded metallic-dark border, transparent center */
+    border: var(--bezel) solid #232328;
+    border-radius: 20px;
+    background: transparent;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+
+    /* layered depth: outer drop shadow, inner accent line, soft purple glow,
+       and top/bottom highlights to fake brushed metal */
+    box-shadow:
+        inset 0 0 0 2px rgba(139, 63, 232, 0.45),   /* purple inner ring */
+        inset 0 2px 0 rgba(255, 255, 255, 0.10),     /* top highlight */
+        inset 0 -2px 0 rgba(0, 0, 0, 0.55),          /* bottom shade */
+        0 8px 22px rgba(0, 0, 0, 0.65),              /* drop shadow */
+        0 0 20px var(--accent-glow);                 /* outer glow */
+    border-image: linear-gradient(150deg, #3b3b42 0%, #1c1c20 45%, #2d2d33 100%) 1;
+    /* border-image disables radius on some engines; CEF keeps the radius via the
+       solid fallback above, so we re-assert color for safety */
+    border-color: #26262b;
+}
+
+/* speaker notch at top center (like the rugged tablet) */
+.notch {
+    position: absolute;
+    top: calc(var(--bezel) * -1 + 3px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 34%;
+    height: 4px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, transparent, #0c0c0e 20%, #0c0c0e 80%, transparent);
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.08);
+}
+
+/* corner bolts */
+.bolt {
+    position: absolute;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #5a5a62, #18181b 75%);
+    box-shadow: 0 1px 1px rgba(0,0,0,0.6);
+}
+.bolt.tl { top: calc(var(--bezel) * -1 + 3px); left: calc(var(--bezel) * -1 + 3px); }
+.bolt.tr { top: calc(var(--bezel) * -1 + 3px); right: calc(var(--bezel) * -1 + 3px); }
+.bolt.bl { bottom: calc(var(--bezel) * -1 + 3px); left: calc(var(--bezel) * -1 + 3px); }
+.bolt.br { bottom: calc(var(--bezel) * -1 + 3px); right: calc(var(--bezel) * -1 + 3px); }

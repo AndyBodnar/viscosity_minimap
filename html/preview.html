@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        /* preview-only: fake the game + minimap behind the bezel */
+        body {
+            background:
+                url('https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=1600&q=60') center/cover fixed,
+                #1a1a1f;
+        }
+        .fake-map {
+            position: absolute;
+            left: var(--map-left); bottom: var(--map-bottom);
+            width: var(--map-w); height: var(--map-h);
+            background: url('https://images.unsplash.com/photo-1524661135-423995f22d0b?w=600&q=60') center/cover;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.5);
+        }
+        .hint { position: fixed; top: 14px; left: 14px; color: #cdbdff; font: 12px system-ui;
+                background: rgba(20,16,28,.8); padding: 8px 12px; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <div class="hint">PREVIEW — bezel ring over a simulated minimap</div>
+    <div class="fake-map"></div>
+    <div class="minimap-frame" id="frame">
+        <div class="notch"></div>
+        <span class="bolt tl"></span><span class="bolt tr"></span>
+        <span class="bolt bl"></span><span class="bolt br"></span>
+    </div>
+</body>
+</html>
